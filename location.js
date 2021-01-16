@@ -2,6 +2,9 @@
  * This file is responsible for fetching the browser geolocation
  */
 function locationSuccess(location) {
+    console.debug('location sucess');
+    console.error(location);
+
     var latitude = location.coords.latitude.toFixed(7);
     var longitude = location.coords.longitude.toFixed(7);
     var accuracy = location.coords.accuracy;
@@ -10,6 +13,8 @@ function locationSuccess(location) {
 }
 
 function locationError(err) {
+    console.debug('location error');
+    console.error(err);
     var errorMessage = "<h3>Sorry, geolocation could not be found: " + err.message + "</h3>";
     if (err.code === 1) {
         errorMessage = "<h3>In order for us to know where the school is located, you must allow location tracking on your browser</h3>";
@@ -40,13 +45,22 @@ $('#recordlocation').on('click', function() {
     $('#recordlocation').html('<i class="fa fa-spinner fa-spin"></i> geolocating...');
     $('#recordlocation').attr('disabled', 'disabled');
 
-    if ("geolocation" in navigator) {
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        };
+    console.debug('Clicked location tracking');
+    try {
+        if ("geolocation" in navigator) {
+            console.debug('has geolocation in navigator');
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            };
 
-        navigator.geolocation.getCurrentPosition(locationSuccess, locationError, options);
-    } else alert('Sorry, geolocation is not available on this device');
+            navigator.geolocation.getCurrentPosition(locationSuccess, locationError, options);
+        } else {
+            console.debug('does NOT have geolocation in navigator');
+            alert('Sorry, geolocation is not available on this device');
+        }
+    } catch (err) {
+        console.error(err);
+    }
 });
