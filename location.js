@@ -4,7 +4,7 @@
 function locationSuccess(location) {
     var latitude = location.coords.latitude.toFixed(7);
     var longitude = location.coords.longitude.toFixed(7);
-    var accuracy = location.coords.accuracy;
+    var accuracy = location.coords.accuracy.toFixed(2);
 
     showLocationResults({ latitude: latitude, longitude: longitude, accuracy: accuracy })
 }
