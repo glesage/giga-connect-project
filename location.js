@@ -2,7 +2,7 @@
  * This file is responsible for fetching the browser geolocation
  */
 function locationSuccess(location) {
-    console.debug('location sucess');
+    console.debug('location sucess!');
     console.error(location);
 
     var latitude = location.coords.latitude.toFixed(7);
